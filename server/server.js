@@ -7,7 +7,7 @@ const app = express();
 app.use(express.static('../public'))
 
 app.listen(port);
-app.use(express.static("../client/dist"));          
+app.use(express.static("../client"));          
 
 app.use(express.json());
 

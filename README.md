@@ -1,1 +1,4 @@
-# Eksam-2025
+## Run project
+* cd server
+* npm install
+* npm run dev
