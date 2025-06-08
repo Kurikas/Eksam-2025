@@ -1,0 +1,5 @@
+# global
+**/node_modules/
+# not global
+/client/.parcel-cache
+/client/dist
