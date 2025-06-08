@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client'
-import App from "./examples.jsx";
+import App from "./avaleht.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
