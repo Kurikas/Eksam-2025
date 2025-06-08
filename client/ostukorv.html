@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peetri Tuulik - Ostukorv</title>
+    <link rel="stylesheet" href="ostukorv.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Graduate:wght@400&display=swap" />
+</head>
+<body>
+
+    <div class="page-container">
+        <!-- HEADER -->
+        <header class="main-header">
+            <div class="logo-container">
+                <img class="logo-icon" alt="Tuuliku logo" src="assets/Tuulik.png">
+                <div class="logo-text">PEETRI TUULIK</div>
+            </div>
+            <nav class="main-nav">
+                <a href="index.html">Avaleht</a>
+                <a href="e-pood.html">E-Pood</a>
+                <a href="Tooted.html">Tooted</a>
+                <a href="annetused.html">Annetused</a>
+                <a href="kontakt.html">Kontakt</a>
+            </nav>
+        </header>
+
+        <!-- MAIN SHOPPING CART CONTENT -->
+        <main class="cart-section">
+            <h1>Sinu Ostukorv</h1>
+            <div class="cart-layout">
+
+                <!-- Cart Items List -->
+                <div class="cart-items">
+                    <div class="cart-item" data-price="20">
+                        <img src="assets/Käsitöö-pott-1.png" alt="Savipott" class="item-image">
+                        <div class="item-details">
+                            <h3>Savipott</h3>
+                            <p>Pott otse Peetri Tuuliku tipust</p>
+                            <button class="remove-button">Eemalda</button>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="quantity-btn minus-btn">-</button>
+                            <input type="text" class="quantity-input" value="1" readonly>
+                            <button class="quantity-btn plus-btn">+</button>
+                        </div>
+                        <div class="item-price">20.00€</div>
+                    </div>
+
+                    <div class="cart-item" data-price="35">
+                        <img src="assets/Käsitöö-tuulik-2.png" alt="Käsitöö tuulik" class="item-image">
+                        <div class="item-details">
+                            <h3>Käsitöö tuulik</h3>
+                            <p>Disainitud orginaalse tuuliku järgi</p>
+                            <button class="remove-button">Eemalda</button>
+                        </div>
+                        <div class="item-quantity">
+                             <button class="quantity-btn minus-btn">-</button>
+                            <input type="text" class="quantity-input" value="1" readonly>
+                            <button class="quantity-btn plus-btn">+</button>
+                        </div>
+                        <div class="item-price">35.00€</div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>Kokkuvõte</h2>
+                    <div class="summary-row">
+                        <span>Vahesumma</span>
+                        <span id="subtotal">55.00€</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Saatmine</span>
+                        <span>5.00€</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>KOKKU</span>
+                        <span id="total">60.00€</span>
+                    </div>
+                    <button class="checkout-button">Vormista ost</button>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="main-footer">
+            <div class="footer-column">
+                <h3>Telefoni abiliin</h3>
+                <p>+372 5555 6666</p>
+                <p>E-R 9:00-17:00</p>
+            </div>
+            <div class="footer-column footer-logo-section">
+                <img src="assets/icons8-windmill-100 (2) 1.png" alt="Peetri Tuulik Logo" class="footer-logo">
+                <h3>PEETRI TUULIK</h3>
+                <p class="copyright">@ copyright-2025-Peetri Tuulik</p>
+            </div>
+            <div class="footer-column">
+                <h3>Jälgi meid</h3>
+                <p>Sotsiaal Meedia</p>
+                <div class="social-icons">
+                    <img src="assets/Frame.svg" alt="Social Icon">
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JAVASCRIPT FOR FUNCTIONALITY -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartItemsContainer = document.querySelector('.cart-items');
+
+            function updateTotals() {
+                let subtotal = 0;
+                const cartItems = document.querySelectorAll('.cart-item');
+                
+                cartItems.forEach(item => {
+                    const price = parseFloat(item.dataset.price);
+                    const quantity = parseInt(item.querySelector('.quantity-input').value);
+                    subtotal += price * quantity;
+                });
+
+                const shipping = 5.00;
+                const total = subtotal + shipping;
+
+                document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)}€`;
+                document.getElementById('total').textContent = `${total.toFixed(2)}€`;
+            }
+
+            cartItemsContainer.addEventListener('click', (event) => {
+                const target = event.target;
+                const cartItem = target.closest('.cart-item');
+                if (!cartItem) return;
+
+                const quantityInput = cartItem.querySelector('.quantity-input');
+                let quantity = parseInt(quantityInput.value);
+
+                // Handle quantity changes
+                if (target.classList.contains('plus-btn')) {
+                    quantity++;
+                    quantityInput.value = quantity;
+                } else if (target.classList.contains('minus-btn')) {
+                    if (quantity > 1) {
+                        quantity--;
+                        quantityInput.value = quantity;
+                    }
+                }
+
+                // Handle remove item
+                if (target.classList.contains('remove-button')) {
+                    cartItem.remove();
+                }
+                
+                updateTotals();
+            });
+
+            // Initial calculation
+            updateTotals();
+        });
+    </script>
+
+</body>
+</html>
